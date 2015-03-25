@@ -3,4 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_password_configuration">PasswordConfigurationActivity</string>
+    <string name="title_activity_light">LightActivity</string>
+    <string name="title_activity_shake">ShakeActivity</string>
+    <string name="title_activity_speech">SpeechActivity</string>
+    <string name="title_activity_result">ResultActivity</string>
 </resources>

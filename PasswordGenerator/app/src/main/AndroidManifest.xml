@@ -16,6 +16,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".PasswordConfigurationActivity"
+            android:label="@string/title_activity_password_configuration" >
+        </activity>
+        <activity
+            android:name=".LightActivity"
+            android:label="@string/title_activity_light" >
+        </activity>
+        <activity
+            android:name=".ShakeActivity"
+            android:label="@string/title_activity_shake" >
+        </activity>
+        <activity
+            android:name=".SpeechActivity"
+            android:label="@string/title_activity_speech" >
+        </activity>
+        <activity
+            android:name=".ResultActivity"
+            android:label="@string/title_activity_result" >
+        </activity>
     </application>
 
 </manifest>
