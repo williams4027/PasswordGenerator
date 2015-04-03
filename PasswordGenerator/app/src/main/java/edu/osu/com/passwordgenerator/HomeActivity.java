@@ -2,11 +2,9 @@ package edu.osu.com.passwordgenerator;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,7 +27,7 @@ public class HomeActivity extends ActionBarActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent configIntent = new Intent(thisContext, PasswordConfigurationActivity.class);
+                Intent configIntent = new Intent(thisContext, ShakeActivity.class);
                 startActivity(configIntent);
             }
         });

@@ -26,7 +26,8 @@
         </activity>
         <activity
             android:name=".ShakeActivity"
-            android:label="@string/title_activity_shake" >
+            android:label="@string/title_activity_shake"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".SpeechActivity"
