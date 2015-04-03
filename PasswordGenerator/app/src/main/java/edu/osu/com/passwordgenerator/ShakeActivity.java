@@ -91,8 +91,9 @@ public class ShakeActivity extends ActionBarActivity implements SensorEventListe
                     shakeCount++;
                     shakeCountText.setText(Long.toString(shakeCount));
 
+                    // Party time!
                     if (shakeCount % 5 == 0) {
-                        thisView.setBackgroundColor(Color.rgb(Math.round(x) % 256, Math.round(y) % 256, Math.round(z) % 256));
+                        thisView.setBackgroundColor(Color.rgb(Math.round(x * last_x) % 256, Math.round(y * last_y) % 256, Math.round(z * last_z) % 256));
                     }
                 }
 
