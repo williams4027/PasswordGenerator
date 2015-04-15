@@ -41,10 +41,10 @@ public class ShakeActivity extends ActionBarActivity implements SensorEventListe
         setContentView(R.layout.activity_shake);
 
         passwordData = (PasswordDataObject)getIntent().getSerializableExtra("PasswordData");
-        System.out.println(passwordData.getPasswordLength());
-        System.out.println(passwordData.getUppercaseCount());
-        System.out.println(passwordData.getNumberCount());
-        System.out.println(passwordData.getSpecialCharacterCount());
+        System.out.println("Password Length: " + passwordData.getPasswordLength());
+        System.out.println("UpperCase Min Count: " + passwordData.getUppercaseCount());
+        System.out.println("Number Min Count: " + passwordData.getNumberCount());
+        System.out.println("Special Character Min Count: " + passwordData.getSpecialCharacterCount());
 
         nextStageButton = (Button) findViewById(R.id.shakeNextStageButton);
         nextStageButton.setOnClickListener(new View.OnClickListener() {

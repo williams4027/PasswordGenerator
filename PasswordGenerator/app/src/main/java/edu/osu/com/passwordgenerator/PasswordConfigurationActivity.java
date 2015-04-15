@@ -117,7 +117,7 @@ public class PasswordConfigurationActivity extends ActionBarActivity {
         String currentLine = null;
         try {
             while ((currentLine = dictionaryBufferedReader.readLine()) != null) {
-                if (currentLine != null && currentLine.length() > MIN_WORD_LENGTH) {
+                if (currentLine != null && currentLine.length() >= MIN_WORD_LENGTH) {
                     int wordLength = currentLine.length();
                     List<String> tempWordLengthList = null;
                     if (dictionaryWordMap.get(wordLength) == null) {
@@ -125,7 +125,7 @@ public class PasswordConfigurationActivity extends ActionBarActivity {
                     } else {
                         tempWordLengthList = dictionaryWordMap.get(wordLength);
                     }
-                    tempWordLengthList.add(currentLine);
+                    tempWordLengthList.add(currentLine.toLowerCase());
 
                     // Place the map back in
                     dictionaryWordMap.put(wordLength, tempWordLengthList);
@@ -144,8 +144,8 @@ public class PasswordConfigurationActivity extends ActionBarActivity {
         int remainingCharacters = passwordLength - numberMin - specialCharMin;
         Random randomAccess = new Random(System.currentTimeMillis());
         while (remainingCharacters > 0) {
-            int randomWordLength = ( Math.abs(randomAccess.nextInt()) % remainingCharacters );
-            if (randomWordLength < MIN_WORD_LENGTH){
+            int randomWordLength = ( Math.abs(randomAccess.nextInt()) % remainingCharacters ) + 1;
+            if (randomWordLength < MIN_WORD_LENGTH || (remainingCharacters - randomWordLength) < MIN_WORD_LENGTH){
                 randomWordLength = remainingCharacters;
             }
             List<String> randomSizedWordList = dictionaryWordMap.get(randomWordLength);
