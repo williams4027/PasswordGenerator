@@ -1,9 +1,11 @@
 package edu.osu.com.passwordgenerator.utility;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-public class PasswordDataObject {
+public class PasswordDataObject implements Serializable {
+
     private int passwordLength;
     private int uppercaseCount;
     private int numberCount;
@@ -29,5 +31,37 @@ public class PasswordDataObject {
         private String word;
         private Set<String>  extraCharacterSet;
 
+    }
+
+    public int getPasswordLength() {
+        return passwordLength;
+    }
+
+    public void setPasswordLength(int passwordLength) {
+        this.passwordLength = passwordLength;
+    }
+
+    public int getUppercaseCount() {
+        return uppercaseCount;
+    }
+
+    public void setUppercaseCount(int uppercaseCount) {
+        this.uppercaseCount = uppercaseCount;
+    }
+
+    public int getNumberCount() {
+        return numberCount;
+    }
+
+    public void setNumberCount(int numberCount) {
+        this.numberCount = numberCount;
+    }
+
+    public int getSpecialCharacterCount() {
+        return specialCharacterCount;
+    }
+
+    public void setSpecialCharacterCount(int specialCharacterCount) {
+        this.specialCharacterCount = specialCharacterCount;
     }
 }

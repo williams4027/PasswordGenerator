@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import edu.osu.com.passwordgenerator.utility.PasswordDataObject;
+
 
 public class ShakeActivity extends ActionBarActivity implements SensorEventListener {
 
@@ -31,16 +33,25 @@ public class ShakeActivity extends ActionBarActivity implements SensorEventListe
     private Button nextStageButton;
     private View thisView = null;
 
+    private PasswordDataObject passwordData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shake);
+
+        passwordData = (PasswordDataObject)getIntent().getSerializableExtra("PasswordData");
+        System.out.println(passwordData.getPasswordLength());
+        System.out.println(passwordData.getUppercaseCount());
+        System.out.println(passwordData.getNumberCount());
+        System.out.println(passwordData.getSpecialCharacterCount());
 
         nextStageButton = (Button) findViewById(R.id.shakeNextStageButton);
         nextStageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent configIntent = new Intent(ShakeActivity.this, SpeechActivity.class);
+                configIntent.putExtra("PasswordData", passwordData);
                 startActivity(configIntent);
             }
         });
