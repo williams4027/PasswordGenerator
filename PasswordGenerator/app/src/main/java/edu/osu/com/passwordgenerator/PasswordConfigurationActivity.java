@@ -10,12 +10,22 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
 import edu.osu.com.passwordgenerator.utility.PasswordDataObject;
+import edu.osu.com.passwordgenerator.utility.WordModule;
 
 
 public class PasswordConfigurationActivity extends ActionBarActivity {
 
-    private static final int MIN_WORD_LENGTH = 2;
+    private static final int MIN_WORD_LENGTH = 3;
     private SeekBar passwordLengthSeekbar;
     private NumberPicker minimumUppercasePicker;
     private NumberPicker minimumNumberPicker;
@@ -28,10 +38,10 @@ public class PasswordConfigurationActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_configuration);
 
-        passwordLengthSeekbar = (SeekBar)findViewById(R.id.passwordLengthSeekbar);
-        seekBarValue = (TextView)findViewById(R.id.seekbarValue);
+        passwordLengthSeekbar = (SeekBar) findViewById(R.id.passwordLengthSeekbar);
+        seekBarValue = (TextView) findViewById(R.id.seekbarValue);
 
-        passwordLengthSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+        passwordLengthSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
@@ -40,10 +50,12 @@ public class PasswordConfigurationActivity extends ActionBarActivity {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
         });
 
         minimumUppercasePicker = (NumberPicker) findViewById(R.id.minUpperPicker);
@@ -63,12 +75,14 @@ public class PasswordConfigurationActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                if (validateFields()){
+                if (validateFields()) {
                     PasswordDataObject passwordData = new PasswordDataObject();
                     passwordData.setPasswordLength(passwordLengthSeekbar.getProgress());
                     passwordData.setUppercaseCount(minimumUppercasePicker.getValue());
                     passwordData.setNumberCount(minimumNumberPicker.getValue());
                     passwordData.setSpecialCharacterCount(minimumSpecialCharPicker.getValue());
+
+                    assignInitialWords(passwordData);
 
                     Intent configIntent = new Intent(PasswordConfigurationActivity.this, ShakeActivity.class);
                     configIntent.putExtra("PasswordData", passwordData);
@@ -85,14 +99,67 @@ public class PasswordConfigurationActivity extends ActionBarActivity {
         int specialCharMin = minimumSpecialCharPicker.getValue();
 
         boolean fieldsValid = true;
-        if ((uppercaseMin + numberMin + specialCharMin) > passwordLength){
+        if ((uppercaseMin + numberMin + specialCharMin) > passwordLength) {
             Toast.makeText(getApplicationContext(), "The number of uppercase, minimum numbers, and special characters cannot be more than the password length.", Toast.LENGTH_LONG).show();
             fieldsValid = false;
         }
-        if ((passwordLength - numberMin - specialCharMin) < MIN_WORD_LENGTH){
+        if ((passwordLength - numberMin - specialCharMin) < MIN_WORD_LENGTH) {
             Toast.makeText(getApplicationContext(), "The password length must be able to create words of at least " + MIN_WORD_LENGTH + " letters after removing the minimum numbers and special character count.", Toast.LENGTH_LONG).show();
             fieldsValid = false;
         }
         return fieldsValid;
+    }
+
+    private void assignInitialWords(PasswordDataObject passwordData) {
+        BufferedReader dictionaryBufferedReader = new BufferedReader(new InputStreamReader(this.getApplicationContext().getResources().openRawResource(R.raw.words)));
+
+        Map<Integer, List<String>> dictionaryWordMap = new HashMap<>();
+        String currentLine = null;
+        try {
+            while ((currentLine = dictionaryBufferedReader.readLine()) != null) {
+                if (currentLine != null && currentLine.length() > MIN_WORD_LENGTH) {
+                    int wordLength = currentLine.length();
+                    List<String> tempWordLengthList = null;
+                    if (dictionaryWordMap.get(wordLength) == null) {
+                        tempWordLengthList = new ArrayList<>();
+                    } else {
+                        tempWordLengthList = dictionaryWordMap.get(wordLength);
+                    }
+                    tempWordLengthList.add(currentLine);
+
+                    // Place the map back in
+                    dictionaryWordMap.put(wordLength, tempWordLengthList);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Here");
+        System.out.println(dictionaryWordMap.toString());
+
+        int passwordLength = passwordLengthSeekbar.getProgress();
+        int numberMin = minimumNumberPicker.getValue();
+        int specialCharMin = minimumSpecialCharPicker.getValue();
+
+        int remainingCharacters = passwordLength - numberMin - specialCharMin;
+        Random randomAccess = new Random(System.currentTimeMillis());
+        while (remainingCharacters > 0) {
+            int randomWordLength = ( Math.abs(randomAccess.nextInt()) % remainingCharacters );
+            if (randomWordLength < MIN_WORD_LENGTH){
+                randomWordLength = remainingCharacters;
+            }
+            List<String> randomSizedWordList = dictionaryWordMap.get(randomWordLength);
+
+            // There exists words that match this size
+            if (randomSizedWordList != null) {
+                remainingCharacters = remainingCharacters - randomWordLength;
+                int randomWordIndex = Math.abs(randomAccess.nextInt()) % randomSizedWordList.size();
+                String randomWord = randomSizedWordList.get(randomWordIndex);
+                WordModule currentWordModule = new WordModule(randomWord);
+                passwordData.addWordModule(currentWordModule);
+            }
+        }
+
+        System.out.println(passwordData.getWordModuleList().toString());
     }
 }

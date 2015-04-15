@@ -1,8 +1,8 @@
 package edu.osu.com.passwordgenerator.utility;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class PasswordDataObject implements Serializable {
 
@@ -12,6 +12,10 @@ public class PasswordDataObject implements Serializable {
     private int specialCharacterCount;
 
     private List<WordModule> wordModuleList;
+
+    public PasswordDataObject() {
+        wordModuleList = new ArrayList<>();
+    }
 
     /*
     List<WordModule>
@@ -26,12 +30,6 @@ public class PasswordDataObject implements Serializable {
 
     toString: Dog3cAt&haT
      */
-
-    private class WordModule{
-        private String word;
-        private Set<String>  extraCharacterSet;
-
-    }
 
     public int getPasswordLength() {
         return passwordLength;
@@ -63,5 +61,13 @@ public class PasswordDataObject implements Serializable {
 
     public void setSpecialCharacterCount(int specialCharacterCount) {
         this.specialCharacterCount = specialCharacterCount;
+    }
+
+    public void addWordModule(WordModule currentWordModule) {
+        this.wordModuleList.add(currentWordModule);
+    }
+
+    public List<WordModule> getWordModuleList() {
+        return wordModuleList;
     }
 }
