@@ -13,8 +13,22 @@ public class PasswordDataObject implements Serializable {
 
     private List<WordModule> wordModuleList;
 
+    // List of supported special characters
+    List<Character> specialCharacterList;
+
     public PasswordDataObject() {
+
         wordModuleList = new ArrayList<>();
+
+        char[] specialCharacterArray = new char[]{
+                '@', '%', '+', '\\', '/', '\'', '!', '#', '$', '^', '?', ':', ',',
+                '(', ')', '{', '}', '[', ']', '~', '-', '_'
+        };
+
+        specialCharacterList = new ArrayList<>();
+        for (char currentChar : specialCharacterArray) {
+            specialCharacterList.add(currentChar);
+        }
     }
 
     /*
@@ -30,6 +44,36 @@ public class PasswordDataObject implements Serializable {
 
     toString: Dog3cAt&haT
      */
+
+
+    public void clearCharacterSet() {
+        for (WordModule currentWordModule : this.getWordModuleList()) {
+            List<Character> removeList = new ArrayList<>();
+            for (Character currentChar : currentWordModule.getExtraCharacterSet()) {
+                if (this.specialCharacterList.contains(currentChar)) {
+                    removeList.add(currentChar);
+                }
+            }
+            for (Character removeChar : removeList) {
+                currentWordModule.getExtraCharacterSet().remove(removeChar);
+            }
+        }
+    }
+
+    public void clearNumberSet() {
+        for (WordModule currentWordModule : this.getWordModuleList()) {
+            List<Character> removeList = new ArrayList<>();
+            for (Character currentChar : currentWordModule.getExtraCharacterSet()) {
+                if (!this.specialCharacterList.contains(currentChar)) {
+                    removeList.add(currentChar);
+                }
+            }
+            for (Character removeChar : removeList) {
+                currentWordModule.getExtraCharacterSet().remove(removeChar);
+            }
+        }
+
+    }
 
     public int getPasswordLength() {
         return passwordLength;
@@ -65,6 +109,17 @@ public class PasswordDataObject implements Serializable {
 
     public void addWordModule(WordModule currentWordModule) {
         this.wordModuleList.add(currentWordModule);
+    }
+
+    @Override
+    public String toString() {
+        return "PasswordDataObject{" +
+                "passwordLength=" + passwordLength +
+                ", uppercaseCount=" + uppercaseCount +
+                ", numberCount=" + numberCount +
+                ", specialCharacterCount=" + specialCharacterCount +
+                ", wordModuleList=" + wordModuleList +
+                '}';
     }
 
     public List<WordModule> getWordModuleList() {

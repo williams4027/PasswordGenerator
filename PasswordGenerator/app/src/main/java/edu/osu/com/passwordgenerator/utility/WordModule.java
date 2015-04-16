@@ -10,7 +10,7 @@ import java.util.Set;
 public class WordModule implements Serializable{
 
     private String word;
-    private Set<String> extraCharacterSet;
+    private Set<Character> extraCharacterSet;
 
     public WordModule(String word){
         this.word = word;
@@ -25,11 +25,11 @@ public class WordModule implements Serializable{
         this.word = word;
     }
 
-    public Set<String> getExtraCharacterSet() {
+    public Set<Character> getExtraCharacterSet() {
         return extraCharacterSet;
     }
 
-    public void setExtraCharacterSet(Set<String> extraCharacterSet) {
+    public void setExtraCharacterSet(Set<Character> extraCharacterSet) {
         this.extraCharacterSet = extraCharacterSet;
     }
 
