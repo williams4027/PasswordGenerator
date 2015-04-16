@@ -7,18 +7,31 @@
     tools:context="edu.osu.com.passwordgenerator.ResultActivity"
     android:background="#78a97f2a">
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Password!"
-        android:id="@+id/passwordResultTextView"
+        android:text="Add Change Reminder"
+        android:id="@+id/changeReminderButton"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:gravity="center_horizontal" />
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Password!"
+        android:layout_marginTop="30dp"
+        android:id="@+id/passwordResultTextView"
+        android:layout_below="@+id/changeReminderButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center_horizontal"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -55,16 +68,5 @@
         android:src="@drawable/treasure"
         android:layout_above="@+id/linearLayout"
         android:layout_below="@+id/changeReminderButton" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Change Reminder"
-        android:id="@+id/changeReminderButton"
-        android:layout_below="@+id/passwordResultTextView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/passwordResultTextView"
-        android:layout_alignEnd="@+id/passwordResultTextView" />
 
 </RelativeLayout>
