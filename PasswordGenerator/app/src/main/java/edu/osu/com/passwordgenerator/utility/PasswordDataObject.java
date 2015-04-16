@@ -2,6 +2,7 @@ package edu.osu.com.passwordgenerator.utility;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PasswordDataObject implements Serializable {
@@ -45,17 +46,22 @@ public class PasswordDataObject implements Serializable {
     toString: Dog3cAt&haT
      */
 
+    public void clearUppercase() {
+        for (WordModule currentWordModule : this.getWordModuleList()) {
+            currentWordModule.setWord(currentWordModule.getWord().toLowerCase());
+        }
+    }
 
     public void clearCharacterSet() {
         for (WordModule currentWordModule : this.getWordModuleList()) {
             List<Character> removeList = new ArrayList<>();
-            for (Character currentChar : currentWordModule.getExtraCharacterSet()) {
+            for (Character currentChar : currentWordModule.getExtraCharacterList()) {
                 if (this.specialCharacterList.contains(currentChar)) {
                     removeList.add(currentChar);
                 }
             }
             for (Character removeChar : removeList) {
-                currentWordModule.getExtraCharacterSet().remove(removeChar);
+                currentWordModule.getExtraCharacterList().remove(removeChar);
             }
         }
     }
@@ -63,16 +69,28 @@ public class PasswordDataObject implements Serializable {
     public void clearNumberSet() {
         for (WordModule currentWordModule : this.getWordModuleList()) {
             List<Character> removeList = new ArrayList<>();
-            for (Character currentChar : currentWordModule.getExtraCharacterSet()) {
+            for (Character currentChar : currentWordModule.getExtraCharacterList()) {
                 if (!this.specialCharacterList.contains(currentChar)) {
                     removeList.add(currentChar);
                 }
             }
             for (Character removeChar : removeList) {
-                currentWordModule.getExtraCharacterSet().remove(removeChar);
+                currentWordModule.getExtraCharacterList().remove(removeChar);
             }
         }
+    }
 
+    public String currentPasswordString(){
+        String finalPassword = "";
+        for (WordModule currentWordModule : this.getWordModuleList()){
+            finalPassword += currentWordModule.getWord();
+            List<Character> currentCharacterList = currentWordModule.getExtraCharacterList();
+            Collections.shuffle(currentCharacterList);
+            for (Character currentChar : currentCharacterList){
+                finalPassword += currentChar;
+            }
+        }
+        return finalPassword;
     }
 
     public int getPasswordLength() {

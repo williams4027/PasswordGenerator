@@ -35,4 +35,17 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Current Password"
+        android:id="@+id/currentPasswordShakeView"
+        android:layout_above="@+id/shakeNextStageButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/shakeNextStageButton"
+        android:layout_alignEnd="@+id/shakeNextStageButton"
+        android:gravity="center_horizontal" />
+
 </RelativeLayout>

@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Random;
+
 import edu.osu.com.passwordgenerator.utility.PasswordDataObject;
 
 
@@ -25,7 +27,7 @@ public class ShakeActivity extends ActionBarActivity implements SensorEventListe
 
     private long lastUpdate = 0;
     private float last_x, last_y, last_z;
-    private long shakeCount = 0;
+    private long shakeCount = 1;
 
     private static final int SHAKE_THRESHOLD = 600;
     private TextView shakeCountText;
@@ -45,12 +47,20 @@ public class ShakeActivity extends ActionBarActivity implements SensorEventListe
         System.out.println("UpperCase Min Count: " + passwordData.getUppercaseCount());
         System.out.println("Number Min Count: " + passwordData.getNumberCount());
         System.out.println("Special Character Min Count: " + passwordData.getSpecialCharacterCount());
+        System.out.println("PasswordData: " + passwordData.toString());
+
+        TextView currentPasswordView = (TextView)findViewById(R.id.currentPasswordShakeView);
+        currentPasswordView.setText("Current Password: " + passwordData.currentPasswordString());
 
         nextStageButton = (Button) findViewById(R.id.shakeNextStageButton);
         nextStageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent configIntent = new Intent(ShakeActivity.this, SpeechActivity.class);
+
+                passwordData.clearNumberSet();
+                assignNumbers(passwordData, shakeCount);
+
                 configIntent.putExtra("PasswordData", passwordData);
                 startActivity(configIntent);
             }
@@ -67,6 +77,21 @@ public class ShakeActivity extends ActionBarActivity implements SensorEventListe
         mp.start();
 
         thisView = findViewById(R.id.shakeView);
+    }
+
+    private void assignNumbers(PasswordDataObject passwordData, long seedValue) {
+
+        Random randomAccess = new Random(System.currentTimeMillis() * shakeCount) ;
+        for ( int numberIndex = 0; numberIndex < passwordData.getNumberCount(); numberIndex++ ){
+            // Randomly Choose a Module to get the number appended
+            int randomModuleIndex = Math.abs(randomAccess.nextInt()) % passwordData.getWordModuleList().size();
+
+            // Randomly choose a number to append
+            char randomNumberChar = Character.forDigit(Math.abs(randomAccess.nextInt() % 10), 10);
+            System.out.println("Number Generated: " + randomNumberChar);
+            // Assign to the module
+            passwordData.getWordModuleList().get(randomModuleIndex).getExtraCharacterList().add(randomNumberChar);
+        }
     }
 
     protected void onPause() {

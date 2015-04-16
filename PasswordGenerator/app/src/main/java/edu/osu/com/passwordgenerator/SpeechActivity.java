@@ -29,6 +29,7 @@ public class SpeechActivity extends ActionBarActivity {
        '@', '%', '+', '\\', '/', '\'', '!', '#', '$', '^', '?', ':', ',',
             '(', ')', '{', '}', '[', ']', '~', '-', '_'
     };
+
     private PasswordDataObject passwordData;
     private Button nextStageButton;
 
@@ -43,6 +44,23 @@ public class SpeechActivity extends ActionBarActivity {
         System.out.println("Number Min Count: " + passwordData.getNumberCount());
         System.out.println("Special Character Min Count: " + passwordData.getSpecialCharacterCount());
         System.out.println("PasswordData: " + passwordData.toString());
+
+        TextView currentPasswordView = (TextView)findViewById(R.id.currentPasswordSpeechView);
+        currentPasswordView.setText("Current Password: " + passwordData.currentPasswordString());
+
+        nextStageButton = (Button) findViewById(R.id.speechNextStageButton);
+        nextStageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent configIntent = new Intent(SpeechActivity.this, LightActivity.class);
+
+                passwordData.clearCharacterSet();
+                assignSpecialCharacters(passwordData, txtResult.getText().hashCode());
+
+                configIntent.putExtra("PasswordData", passwordData);
+                startActivity(configIntent);
+            }
+        });
 
         txtResult = (TextView) findViewById(R.id.resultText);
         btnAnswerSpeak = (ImageButton) findViewById(R.id.micButton);
@@ -64,20 +82,6 @@ public class SpeechActivity extends ActionBarActivity {
                 }
             }
         });
-
-        nextStageButton = (Button) findViewById(R.id.speechNextStageButton);
-        nextStageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent configIntent = new Intent(SpeechActivity.this, ResultActivity.class);
-
-                passwordData.clearCharacterSet();
-                assignSpecialCharacters(passwordData, txtResult.getText().hashCode());
-
-                configIntent.putExtra("PasswordData", passwordData);
-                startActivity(configIntent);
-            }
-        });
     }
 
     private void assignSpecialCharacters(PasswordDataObject passwordData, int seedValue) {
@@ -91,7 +95,7 @@ public class SpeechActivity extends ActionBarActivity {
             char randomSpecialChar = specialCharacterList[Math.abs(randomAccess.nextInt()) % specialCharacterList.length];
 
             // Assign to the module
-            passwordData.getWordModuleList().get(randomModuleIndex).getExtraCharacterSet().add(randomSpecialChar);
+            passwordData.getWordModuleList().get(randomModuleIndex).getExtraCharacterList().add(randomSpecialChar);
         }
 
     }

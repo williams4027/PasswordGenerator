@@ -1,8 +1,8 @@
 package edu.osu.com.passwordgenerator.utility;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by blakew on 4/15/2015.
@@ -10,11 +10,11 @@ import java.util.Set;
 public class WordModule implements Serializable{
 
     private String word;
-    private Set<Character> extraCharacterSet;
+    private List<Character> extraCharacterList;
 
     public WordModule(String word){
         this.word = word;
-        this.extraCharacterSet = new HashSet<>();
+        this.extraCharacterList = new ArrayList<>();
     }
 
     public String getWord() {
@@ -25,19 +25,19 @@ public class WordModule implements Serializable{
         this.word = word;
     }
 
-    public Set<Character> getExtraCharacterSet() {
-        return extraCharacterSet;
+    public List<Character> getExtraCharacterList() {
+        return extraCharacterList;
     }
 
-    public void setExtraCharacterSet(Set<Character> extraCharacterSet) {
-        this.extraCharacterSet = extraCharacterSet;
+    public void setExtraCharacterList(List<Character> extraCharacterList) {
+        this.extraCharacterList = extraCharacterList;
     }
 
     @Override
     public String toString() {
         return "WordModule{" +
                 "word='" + word + '\'' +
-                ", extraCharacterSet=" + extraCharacterSet +
+                ", extraCharacterList=" + extraCharacterList +
                 '}';
     }
 }
