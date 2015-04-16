@@ -51,7 +51,7 @@ public class LightActivity extends ActionBarActivity {
         nextStageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent configIntent = new Intent(LightActivity.this, ResultActivity.class);
+                Intent configIntent = new Intent(LightActivity.this, ShakeActivity.class);
 
                 passwordData.clearUppercase();
                 assignUppercase(passwordData, lightMeter.getProgress());

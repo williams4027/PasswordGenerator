@@ -84,7 +84,7 @@ public class PasswordConfigurationActivity extends ActionBarActivity {
 
                     assignInitialWords(passwordData);
 
-                    Intent configIntent = new Intent(PasswordConfigurationActivity.this, ShakeActivity.class);
+                    Intent configIntent = new Intent(PasswordConfigurationActivity.this, LightActivity.class);
                     configIntent.putExtra("PasswordData", passwordData);
                     startActivity(configIntent);
                 }

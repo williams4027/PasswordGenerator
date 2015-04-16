@@ -67,6 +67,6 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/treasure"
         android:layout_above="@+id/linearLayout"
-        android:layout_below="@+id/changeReminderButton" />
+        android:layout_below="@+id/passwordResultTextView" />
 
 </RelativeLayout>

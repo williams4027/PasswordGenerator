@@ -52,7 +52,7 @@ public class SpeechActivity extends ActionBarActivity {
         nextStageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent configIntent = new Intent(SpeechActivity.this, LightActivity.class);
+                Intent configIntent = new Intent(SpeechActivity.this, ResultActivity.class);
 
                 passwordData.clearCharacterSet();
                 assignSpecialCharacters(passwordData, txtResult.getText().hashCode());
