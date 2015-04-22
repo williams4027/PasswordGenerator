@@ -22,7 +22,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Shake Count:"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView6" />
 
     <Button
         android:layout_width="wrap_content"
@@ -47,5 +48,15 @@
         android:layout_alignRight="@+id/shakeNextStageButton"
         android:layout_alignEnd="@+id/shakeNextStageButton"
         android:gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Dance to your own beat and shake the phone!"
+        android:id="@+id/textView7"
+        android:layout_below="@+id/textView6"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp" />
 
 </RelativeLayout>
